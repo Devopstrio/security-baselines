@@ -4,7 +4,7 @@
 
 <h1>Security Baselines Platform</h1>
 
-<p><strong>The Strategic Governance Architecture for Defining, Validating, and Enforcing Secure Configuration Standards at Enterprise Scale</strong></p>
+<p><strong>The Strategic Governance Architecture for Defining, Validating, and Enforcing Secure Configuration Standards at Enterprise Scale.</strong></p>
 
 [![Standard: CIS Benchmarks](https://img.shields.io/badge/Standard-CIS--Benchmarks-blue.svg?style=for-the-badge&labelColor=000000)]()
 [![Status: Production--Ready](https://img.shields.io/badge/Status-Production--Ready-emerald.svg?style=for-the-badge&labelColor=000000)]()
@@ -13,7 +13,7 @@
 <br/>
 
 > **"Configuration is the new vulnerability."** 
-> Security Baselines (Baseline-Sec) is an enterprise-grade platform designed to provide a secure, measurable, and highly automated foundation for configuration governance. It orchestrates the complex lifecycle of security baselines—from multi-framework definition (CIS, NIST, ISO) to real-time validation, drift detection, and automated remediation. By providing a standardized policy engine with versioned baselines, compliance scoring, and immutable audit trails, it enables organizations to eliminate configuration drift, reduce the attack surface of cloud-native workloads, and ensure consistent compliance across every tier of the global infrastructure.
+> **Security Baselines (Baseline-Sec)** is an enterprise-grade platform designed to provide a secure, measurable, and highly automated foundation for configuration governance. It orchestrates the entire lifecycle—from multi-framework definition (CIS, NIST, ISO) and tier-based enforcement to real-time validation, drift detection, and automated remediation.
 
 </div>
 
@@ -21,410 +21,267 @@
 
 ## 🏛️ Executive Summary
 
-Modern infrastructure complexity has made manual configuration auditing impossible. Organizations fail to secure their environments not because of a lack of tools, but because of fragmented standards and unmanaged configuration drift across thousands of resources.
+Modern infrastructure complexity has made manual configuration auditing impossible. Organizations often fail to secure their environments not because of a lack of tools, but because of fragmented standards and unmanaged configuration drift across thousands of resources that creates significant security gaps.
 
-This platform provides the **Governance Control Plane**. It implements a complete **Compliance Intelligence Framework**—from YAML-defined OS/K8s/Cloud baselines to asynchronous validation workers and real-time drift analysis. By operationalizing security baselines, it ensures that your infrastructure is not just provisioned, but continuously validated against hardened standards, audited for regulatory compliance, and remediated with precision.
+This platform provides the **Governance Control Plane**. It implements a complete **Compliance Intelligence Framework**, enabling Security and Platform teams to manage security baselines as a first-class citizen. By automating the validation of resource states and the enforcement of hardened standards, we ensure that every organizational component is continuously compliant, audited for regulatory requirements, and remediated with strategic precision.
+
+---
+
+## 📐 Architecture Storytelling: Principal Reference Models
+
+### 1. Principal Architecture: Global Security Baselines & Compliance Orchestration Plane
+This diagram illustrates the end-to-end flow from benchmark research and baseline definition to real-time multi-cloud validation and institutional compliance reporting.
+
+```mermaid
+graph LR
+    %% Subgraph Definitions
+    subgraph BaselineDefinition["Baseline Definition Hub"]
+        direction TB
+        CIS["CIS / NIST Research"]
+        YAML["Baseline-as-Code (YAML/HCL)"]
+        Versioning["Versioned Baseline Registry"]
+    end
+
+    subgraph IntelligenceEngine["Compliance Intelligence Hub"]
+        direction TB
+        API["FastAPI Governance Gateway"]
+        Validator["Real-Time Validation Engine"]
+        Drift["Drift & Regression Detector"]
+        State["Resource State Inventory"]
+    end
+
+    subgraph EnforcementPlane["Tiered Enforcement Hub"]
+        direction TB
+        L1["L1: Foundational (Global)"]
+        L2["L2: Enhanced (Restricted)"]
+        L3["L3: Restricted (Secret)"]
+    end
+
+    subgraph OperationsHub["Compliance & Audit Hub"]
+        direction TB
+        Dash["Compliance Posture Dashboard"]
+        Evidence["Audit Evidence Collector"]
+        Remedy["Auto-Remediation Orchestrator"]
+    end
+
+    subgraph DevOps["Baselines-as-Code Orchestration"]
+        direction TB
+        GitOps["GitOps Baseline Distribution"]
+        TF["Terraform Baseline Modules"]
+        Lake["Forensic Baseline Lake"]
+    end
+
+    %% Flow Arrows
+    BaselineDefinition -->|1. Define Standard| API
+    API -->|2. Map to Tier| EnforcementPlane
+    EnforcementPlane -->|3. Evaluate State| Validator
+    Validator -->|4. Compare Baseline| State
+    
+    State -->|5. Detect Change| Drift
+    Drift -->|6. Trigger Remediation| Remedy
+    Remedy -->|7. Correct Config| EnforcementPlane
+    
+    API -->|8. Visualize Status| Dash
+    Dash -->|9. Generate Attestation| Evidence
+    
+    GitOps -->|10. Push Baseline| API
+    TF -->|11. Provision Hub| IntelligenceEngine
+    API -->|12. Archive Audit| Lake
+
+    %% Styling
+    classDef definition fill:#f5f5f5,stroke:#616161,stroke-width:2px;
+    classDef intel fill:#ede7f6,stroke:#311b92,stroke-width:2px;
+    classDef enforce fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px;
+    classDef ops fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+    classDef devops fill:#fffde7,stroke:#f57f17,stroke-width:2px;
+
+    class BaselineDefinition definition;
+    class IntelligenceEngine intel;
+    class EnforcementPlane enforce;
+    class OperationsHub ops;
+    class DevOps devops;
+```
+
+### 2. The Baseline Lifecycle Management Flow
+The continuous path of a security standard from research and definition to long-term audit attestation.
+
+```mermaid
+graph LR
+    Research["Research CIS/NIST"] --> Define["Define Baseline-as-Code"]
+    Define --> Implement["Implement & Enforce"]
+    Implement --> Audit["Continuous Audit"]
+    Audit --> Attest["Compliance Attestation"]
+```
+
+### 3. Tiered Baseline Security Model
+Standardizing security controls based on workload criticality and business risk levels.
+
+```mermaid
+graph TD
+    Hub["Baseline Hub"] --> L1["Level 1: Foundational (All)"]
+    Hub --> L2["Level 2: Enhanced (Production)"]
+    Hub --> L3["Level 3: Restricted (Financial/PII)"]
+    L1 --- C1["Basic IAM & Encryption"]
+    L2 --- C2["Advanced Logging & MFA"]
+    L3 --- C3["Private Links & JIT Only"]
+```
+
+### 4. Multi-Cloud Baseline Ingestion Hub
+Automating the ingestion of hardened benchmarks across AWS, Azure, GCP, and Kubernetes clusters.
+
+```mermaid
+graph LR
+    CIS["CIS Benchmark (AWS/K8s)"] --> Hub["Baseline Normalizer"]
+    Azure["Azure Security Baseline"] --> Hub
+    Gcp["GCP Security Blueprint"] --> Hub
+    Hub --> Specs["Unified Baseline Spec (YAML)"]
+```
+
+### 5. Policy-as-Code Implementation (HCL/OPA)
+Enforcing baseline standards directly within the Infrastructure-as-Code pipeline using OPA or Terraform.
+
+```mermaid
+graph LR
+    HCL["Terraform Plan"] --> Engine["Policy Engine (OPA)"]
+    Baseline["Baseline Rules"] --> Engine
+    Engine -->|Pass| Deploy["Deploy to Cloud"]
+    Engine -->|Fail| Block["Block Build & Alert"]
+```
+
+### 6. Baseline Drift & Auto-Remediation Flow
+The logic for detecting and automatically correcting deviations from established security standards.
+
+```mermaid
+graph TD
+    State["Live Config State"] --- Monitor["Drift Monitor"]
+    Baseline["Desired Baseline"] --- Monitor
+    Monitor -->|Mismatch| Remedy["Trigger Auto-Remediation"]
+    Remedy -->|Execute| Fix["Apply Correct Config"]
+```
+
+### 7. Service-Specific Baseline Matrix
+Dedicated security controls for critical cloud-native services like S3, EKS, and RDS.
+
+```mermaid
+graph LR
+    Matrix["Baseline Matrix"] --> S3["S3: Public Block / SSE"]
+    Matrix --> EKS["EKS: Private API / Network Pol"]
+    Matrix --> RDS["RDS: Encrypted / Multi-AZ"]
+```
+
+### 8. Identity & RBAC for Baseline Governance
+Managing who has the authority to define standards, approve exceptions, and audit findings.
+
+```mermaid
+graph TD
+    Gov["Governance Team"] --> Define["Baseline Definition"]
+    Approve["SecOps Manager"] --> Exception["Approve Exception"]
+    Audit["Compliance Auditor"] --> Report["Generate Report"]
+```
+
+### 9. Compliance Reporting & Attestation Pipeline
+Generating institutional evidence for SOC2, ISO, and NIST audits from live validation data.
+
+```mermaid
+graph LR
+    Data["Validation Data"] --> Aggregator["Compliance Aggregator"]
+    Aggregator --> Attestation["Institutional Attestation (PDF)"]
+    Attestation --> Audit["External Audit Witness"]
+```
+
+### 10. IaC Deployment: Baselines-as-Code Framework
+Using Terraform to deploy and manage the versioned distribution of security baselines.
+
+```mermaid
+graph LR
+    Git["Git Baseline Repo"] --> CI["CI/CD Pipeline"]
+    CI --> TF["Terraform Apply"]
+    TF --> Cloud["Hardened Cloud Baseline"]
+```
+
+### 11. Metadata Lake for Forensic Baseline History
+Storing long-term records of every configuration change and baseline violation for security investigations.
+
+```mermaid
+graph LR
+    Event["Baseline Violation Event"] --> Stream["Forensic Stream"]
+    Stream --> Lake["Baseline Metadata Lake"]
+    Lake --> Trends["Compliance Drift Analysis"]
+```
 
 ---
 
 ## 🏛️ Core Governance Pillars
 
-1. **Multi-Framework Baseline Hub**: Centralized repository for defining versioned security standards mapped to industry benchmarks (CIS, NIST, PCI-DSS).
-2. **High-Fidelity Validation Engine**: Real-time evaluation of resource configurations against hardened baselines with granular pass/fail reporting.
-3. **Advanced Drift Detection**: Continuous monitoring for "configuration creep," detecting deviations from established baselines over time and alerting on security regressions.
-4. **Compliance Scoring & Heatmaps**: Executive-level visibility into organizational compliance posture across environments, regions, and business units.
-5. **Policy-as-Code Enforcement**: Integrated gates that can block non-compliant configurations (Terraform/Manifests) before they reach production.
-6. **Immutable Audit Governance**: Comprehensive logging of every validation result, exception approval, and remediation action for SOC2/ISO audit readiness.
-
----
-
-## 📐 Architecture Storytelling: 50+ Advanced Diagrams
-
-### 1. The Baseline & Compliance Lifecycle
-*The flow from standard definition to continuous validation.*
-```mermaid
-graph TD
-    subgraph "Standardization"
-        Def[Baseline Definition]
-        Framework[Framework Mapping]
-    end
-
-    subgraph "Operationalization"
-        Scan[Validation Engine]
-        Drift[Drift Detection]
-    end
-
-    subgraph "Governance"
-        Score[Compliance Scoring]
-        Policy[Policy Enforcement]
-        Audit[Audit Lake]
-    end
-
-    Def -->|1. Map| Framework
-    Framework -->|2. Evaluate| Scan
-    Scan -->|3. Monitor| Drift
-    Drift -->|4. Update| Score
-    Score -->|5. Enforce| Policy
-    Policy -->|6. Persist| Audit
-```
-
-### 2. Configuration Drift State Machine
-*Detecting and managing deviations over time.*
-```mermaid
-graph LR
-    Compliant[Compliant State] --> Drifted[Drift Detected]
-    Drifted --> Remediating[Remediation in Progress]
-    Remediating --> Compliant
-    Drifted --> Exception[Approved Exception]
-```
-
-### 3. Baseline Validation Logic Flow
-```mermaid
-graph TD
-    Resource[Target Resource] --> Engine{Validation Engine}
-    Engine -->|Key Match| Rule[Baseline Rule]
-    Rule -->|Match| Pass[Valid]
-    Rule -->|Mismatch| Fail[Violation]
-    Fail --> Alert[Alert / Remediate]
-```
-
-### 4. Framework Mapping: Baseline to Benchmark
-```mermaid
-graph LR
-    Baseline[Baseline Rule] --> NIST[NIST 800-53]
-    Baseline --> CIS[CIS Benchmark]
-    Baseline --> PCI[PCI-DSS v4.0]
-```
-
-### 5. Deployment Topology: High-Available Governance
-```mermaid
-graph LR
-    API[FastAPI Cluster] --> Queue[(Redis Task Queue)]
-    Queue --> Worker[Validation Workers]
-    Worker --> DB[(Postgres Audit Lake)]
-    Worker --> Cloud[Cloud API / K8s]
-```
-
-### 6. Policy Enforcement: Block vs Warn
-```mermaid
-graph LR
-    P[Policy] --> B[Block]
-    P --> W[Warn]
-    P --> A[Audit Only]
-```
-
-### 7. Foundation: Multi-Environment Setup
-```mermaid
-graph LR
-    F[Foun] --> M[Mult]
-```
-
-### 8. Networking: Secure Governance Tunnels
-```mermaid
-graph LR
-    N[Netw] --> S[Secu]
-```
-
-### 9. Component: Baseline Engine
-```mermaid
-graph LR
-    C[Comp] --> B[Base]
-```
-
-### 10. Component: Validation Engine
-```mermaid
-graph LR
-    C[Comp] --> V[Vali]
-```
-
-### 11. Component: Drift Detector
-```mermaid
-graph LR
-    C[Comp] --> D[Drif]
-```
-
-### 12. Component: Policy Engine
-```mermaid
-graph LR
-    C[Comp] --> P[Poli]
-```
-
-### 13. Logic: Compliance Scoring Algorithm
-```mermaid
-graph LR
-    L[Logi] --> C[Comp]
-```
-
-### 14. Logic: Exception Lifecycle Handler
-```mermaid
-graph LR
-    L[Logi] --> E[Exce]
-```
-
-### 15. Logic: Remediation Router
-```mermaid
-graph LR
-    L[Logi] --> R[Reme]
-```
-
-### 16. Logic: Version Comparison
-```mermaid
-graph LR
-    L[Logi] --> V[Vers]
-```
-
-### 17. Architecture: Central Governance Hub
-```mermaid
-graph LR
-    A[Arch] --> C[Cent]
-```
-
-### 18. Architecture: Distributed Validation Pool
-```mermaid
-graph LR
-    A[Arch] --> D[Dist]
-```
-
-### 19. Architecture: Real-time Compliance Lake
-```mermaid
-graph LR
-    A[Arch] --> R[Real]
-```
-
-### 20. Pattern: Security-as-Code
-```mermaid
-graph LR
-    P[Patt] --> S[Secu]
-```
-
-### 21. Pattern: Automated Configuration Guardrails
-```mermaid
-graph LR
-    P[Patt] --> A[Auto]
-```
-
-### 22. Pattern: Zero-Trust Configuration
-```mermaid
-graph LR
-    P[Patt] --> Z[Zero]
-```
-
-### 23. Security: Encrypted Baseline Store
-```mermaid
-graph LR
-    S[Secu] --> E[Encr]
-```
-
-### 24. Security: Validation Integrity Check
-```mermaid
-graph LR
-    S[Secu] --> V[Vali]
-```
-
-### 25. Security: Secure Audit Record
-```mermaid
-graph LR
-    S[Secu] --> S[Secu]
-```
-
-### 26. Feature: Baseline Version Diff
-```mermaid
-graph LR
-    F[Feat] --> B[Base]
-```
-
-### 27. Feature: Compliance Heatmap
-```mermaid
-graph LR
-    F[Feat] --> C[Comp]
-```
-
-### 28. Feature: Drift Timeline Visualizer
-```mermaid
-graph LR
-    F[Feat] --> D[Drif]
-```
-
-### 29. Compliance: CIS Benchmarking Log
-```mermaid
-graph LR
-    C[Comp] --> C[CIS]
-```
-
-### 30. Compliance: NIST Mapping Scorecard
-```mermaid
-graph LR
-    C[Comp] --> N[NIST]
-```
-
-### 31. Infrastructure: Redis Drift Queue
-```mermaid
-graph LR
-    I[Infr] --> R[Redi]
-```
-
-### 32. Infrastructure: Postgres Compliance DB
-```mermaid
-graph LR
-    I[Infr] --> P[Post]
-```
-
-### 33. Deployment: Kubernetes Governance Pods
-```mermaid
-graph LR
-    D[Depl] --> K[Kube]
-```
-
-### 34. Deployment: Multi-Region Compliance Sync
-```mermaid
-graph LR
-    D[Depl] --> M[Mult]
-```
-
-### 35. Monitoring: Validation Success KPI
-```mermaid
-graph LR
-    M[Moni] --> V[Vali]
-```
-
-### 36. Monitoring: Drift Detection Latency
-```mermaid
-graph LR
-    M[Moni] --> D[Drif]
-```
-
-### 37. UI: Baselines Dashboard View
-```mermaid
-graph LR
-    U[UI] --> B[Base]
-```
-
-### 38. UI: Compliance Framework Pane
-```mermaid
-graph LR
-    U[UI] --> C[Comp]
-```
-
-### 39. UI: Drift Analysis Visualizer
-```mermaid
-graph LR
-    U[UI] --> D[Drif]
-```
-
-### 40. UI: Governance Policy Editor
-```mermaid
-graph LR
-    U[UI] --> G[Gove]
-```
-
-### 41. CI/CD: Baseline build pipeline
-```mermaid
-graph LR
-    C[CICD] --> B[Base]
-```
-
-### 42. CI/CD: Validation check pipeline
-```mermaid
-graph LR
-    C[CICD] --> V[Vali]
-```
-
-### 43. Strategy: Compliance-First Engineering
-```mermaid
-graph LR
-    S[Stra] --> C[Comp]
-```
-
-### 44. Strategy: Mean-Time-To-Validate
-```mermaid
-graph LR
-    S[Stra] --> M[Mean]
-```
-
-### 45. Feature: Auto-generated Compliance Report
-```mermaid
-graph LR
-    F[Feat] --> A[Auto]
-```
-
-### 46. Feature: Exception Expiry Alerts
-```mermaid
-graph LR
-    F[Feat] --> E[Exce]
-```
-
-### 47. Feature: Baseline Health Dashboard
-```mermaid
-graph LR
-    F[Feat] --> B[Base]
-```
-
-### 48. Logic: Dependency Resolver
-```mermaid
-graph LR
-    L[Logi] --> D[Depe]
-```
-
-### 49. Data Model: Violation Entity
-```mermaid
-graph LR
-    D[Data] --> V[Viol]
-```
-
-### 50. Enterprise Governance Excellence
-```mermaid
-graph LR
-    E[Entr] --> G[Gove]
-```
+1.  **Multi-Framework Baseline Hub**: Centralized repository for defining versioned standards mapped to industry benchmarks.
+2.  **High-Fidelity Validation Engine**: Real-time evaluation of resource configurations against hardened baselines.
+3.  **Advanced Drift Detection**: Continuous monitoring for "configuration creep" and security regressions.
+4.  **Compliance Scoring & Heatmaps**: Executive-level visibility into compliance posture across business units.
+5.  **Policy-as-Code Enforcement**: Integrated gates that block non-compliant configurations before production.
+6.  **Immutable Audit Governance**: Comprehensive logging of validation results and exception approvals for audit readiness.
 
 ---
 
 ## 🛠️ Technical Stack & Implementation
 
 ### Governance Engine & APIs
-- **Framework**: Python 3.11+ / FastAPI.
-- **Baseline Engine**: Versioned configuration schemas for OS, K8s, and Cloud.
-- **Validation Engine**: Real-time evaluation of resource state against baselines.
-- **Drift Detector**: Continuous monitoring for configuration creep and regressions.
-- **Cache**: Redis for high-speed validation task brokering and finding states.
-- **Persistence**: PostgreSQL for baseline definitions, violations, and audit trails.
-- **Identity**: OIDC / JWT with RBAC for granular governance analyst access.
+*   **Framework**: Python 3.11+ / FastAPI.
+*   **Baseline Engine**: Versioned configuration schemas for OS, Kubernetes, and Cloud providers.
+*   **Validation Engine**: Real-time evaluation of resource state against institutional baselines.
+*   **Drift Detector**: Continuous monitoring for configuration creep and regressions.
+*   **State Management**: PostgreSQL (Metadata Lake) and Redis (Validation Cache).
 
-### Frontend (Compliance Dashboard)
-- **Framework**: React 18 / Vite.
-- **Theme**: Dark Cyan / Slate (Modern Enterprise Governance aesthetic).
-- **Visualization**: Recharts for compliance trends and drift analytics.
+### Compliance Dashboard (UI)
+*   **Framework**: React 18 / Vite.
+*   **Theme**: Dark Cyan / Slate (Modern Enterprise Governance aesthetic).
+*   **Visualization**: Recharts for compliance trends and drift analytics.
 
-### Infrastructure
-- **Runtime**: AWS EKS (Kubernetes).
-- **Deployment**: Helm charts for engines and worker distributions.
-- **IaC**: Terraform (Modular with Governance focus).
+### Infrastructure & DevOps
+*   **Runtime**: AWS EKS or Azure Kubernetes Service (AKS).
+*   **IaC**: Modular Terraform for deploying the governance hub and worker distributions.
+
+---
+
+## 🏗️ IaC Mapping (Module Structure)
+
+| Module | Purpose | Real Services |
+| :--- | :--- | :--- |
+| **`infrastructure/governance`** | Central management plane | EKS, PostgreSQL, Redis |
+| **`infrastructure/frameworks`** | Baseline spec and mapping | S3, DynamoDB, OPA |
+| **`infrastructure/scanners`** | Validation and drift agents | Lambda, EventBridge, CloudTrail |
+| **`infrastructure/reporting`** | Audit and evidence sinks | RDS, S3 Glacier, Quicksight |
 
 ---
 
 ## 🚀 Deployment Guide
 
-### Local Development
+### Local Principal Environment
 ```bash
-# Clone the repository
+# Clone the governance platform
 git clone https://github.com/devopstrio/security-baselines.git
 cd security-baselines
 
-# Setup environment
+# Configure environment
 cp .env.example .env
 
-# Launch the Governance stack (API, Workers, DB, Redis, UI)
+# Launch the Governance stack
 make up
 
 # Run a sample baseline validation
 make validate-baseline target="k8s-cluster-01"
 
-# Generate a drift report
+# Generate a compliance drift report
 make drift-report
 ```
+
 Access the Compliance Dashboard at `http://localhost:3000`.
 
 ---
 
 ## 📜 License
 Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+<div align="center">
+  <p>© 2026 Devopstrio. All rights reserved.</p>
+</div>
